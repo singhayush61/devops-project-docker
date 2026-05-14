@@ -72,6 +72,22 @@ jobs:
           key: ${{ secrets.EC2_SSH_KEY }}
           script: | 
 
-              docker compose pull
+              mkdir -p ~/app
 
+              cat > ~/app/docker-compose.yml << 'EOF'
+              version: "3.9"
+
+              services:
+                app:
+                  image: ayushsingh0/devops-project:v1
+                  container_name: devops-container
+                  restart: always
+                  ports:
+                    - "3000:3000"
+
+              EOF
+
+              cd ~/app
+              
+              docker compose pull
               docker compose up -d

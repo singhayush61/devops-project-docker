@@ -70,10 +70,7 @@ jobs:
           host: ${{ env.EC2_IP }}
           username: ubuntu
           key: ${{ secrets.EC2_SSH_KEY }}
-          script: |
-              mkdir -p ~/app
-
-              cd ~/app
+          script: | 
 
               docker compose pull
 

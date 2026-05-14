@@ -15,7 +15,8 @@ resource "aws_instance" "devops_server" {
               #!/bin/bash
 
               apt update -y
-              sudo apt install docker.io docker-compose-plugin -y
+              sudo apt install docker.io -y
+              sudo apt install docker-compose -y
 
               systemctl start docker
               systemctl enable docker

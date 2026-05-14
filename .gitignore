@@ -1,0 +1,12 @@
+# Local terraform directory (Where the big binaries live)
+.terraform/
+
+# State files (Since you are now using S3, you don't need local ones)
+*.tfstate
+*.tfstate.*
+
+# Crash logs and sensitive vars
+crash.log
+*.tfvars
+*.tfvars.json
+override.tf

@@ -1,6 +1,7 @@
 resource "aws_instance" "devops_server" {
-  ami           = "ami-0f58b397bc5c1f2e8"
-  instance_type = "t2.micro"
+  ami = "ami-009be0edec0817ffd"
+
+  instance_type = "t3.micro"
 
   key_name = "devops"
 
@@ -12,10 +13,13 @@ resource "aws_instance" "devops_server" {
 
   user_data = <<-EOF
               #!/bin/bash
+
               apt update -y
               sudo apt install docker.io docker-compose-plugin -y
+
               systemctl start docker
               systemctl enable docker
+
               usermod -aG docker ubuntu
               EOF
 }

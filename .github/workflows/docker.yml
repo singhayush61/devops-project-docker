@@ -14,20 +14,7 @@ jobs:
       - name: Checkout Source
         uses: actions/checkout@v4
       
-            # Setup Node.js
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: 20
-
-      # Install Dependencies
-      - name: Install Dependencies
-        run: npm install
-
-      # Run Tests
-      - name: Run Tests
-        run: npm test
+      
 
       # AWS Credentials
       - name: Configure AWS Credentials

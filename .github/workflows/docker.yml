@@ -26,3 +26,4 @@ jobs:
       - name: Push Docker Image
         run: |
           docker push ayushsingh0/devops-project:v1
+          

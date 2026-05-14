@@ -14,12 +14,12 @@ resource "aws_instance" "devops_server" {
   user_data = <<-EOF
               #!/bin/bash
 
-              apt update -y
+              sudo apt update -y
               sudo apt install docker.io -y
               sudo apt install docker-compose -y
 
-              systemctl start docker
-              systemctl enable docker
+              sudo systemctl start docker
+              sudo systemctl enable docker
 
               usermod -aG docker ubuntu
               EOF

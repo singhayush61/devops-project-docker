@@ -21,6 +21,6 @@ resource "aws_instance" "devops_server" {
               sudo systemctl start docker
               sudo systemctl enable docker
 
-              usermod -aG docker ubuntu
+              sudo usermod -aG docker ubuntu
               EOF
 }

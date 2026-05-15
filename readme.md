@@ -49,3 +49,93 @@ Docker Build
 Docker Hub Push
     ↓
 Deploy to EC2
+````
+
+---
+
+## Features
+
+* Automated CI/CD pipeline
+* Infrastructure as Code using Terraform
+* Containerized Node.js application
+* Docker Compose deployment
+* Auto deployment on push to main branch
+* AWS EC2 provisioning
+* Docker Hub integration
+
+---
+
+## Docker Hub
+
+Docker Image:
+
+```text
+ayushsingh0/devops-project:v1
+```
+
+---
+
+## GitHub Actions Workflow
+
+Workflow File:
+
+```text
+.github/workflows/deploy.yml
+```
+
+---
+
+## Terraform Commands
+
+### Initialize Terraform
+
+```bash
+terraform init
+```
+
+### Apply Infrastructure
+
+```bash
+terraform apply -auto-approve
+```
+
+### Destroy Infrastructure
+
+```bash
+terraform destroy -auto-approve
+```
+
+---
+
+## Run Docker Locally
+
+### Build Image
+
+```bash
+docker build -t devops-project .
+```
+
+### Run Container
+
+```bash
+docker run -p 3000:3000 devops-project
+```
+
+---
+
+## Future Improvements
+
+* NGINX Reverse Proxy
+* HTTPS with Certbot
+* Monitoring using Prometheus & Grafana
+* Kubernetes Deployment
+* AWS ECS Migration
+* Terraform Remote Backend
+
+---
+
+## Author
+
+Ayush Singh
+
+````

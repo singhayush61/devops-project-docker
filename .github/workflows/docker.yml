@@ -93,3 +93,12 @@ jobs:
 
               docker compose pull
               docker compose up -d
+      # 1. Wait for 5 minutes (300 seconds)
+      - name: Wait for 5 Minutes
+        run: sleep 300
+
+      # 2. Automatically destroy the infrastructure
+      - name: Ephemeral Teardown (Terraform Destroy)
+        if: always() # This ensures your infrastructure is destroyed even if the Docker steps fail
+        run: terraform destroy -auto-approve
+        working-directory: terraform

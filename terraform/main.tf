@@ -24,3 +24,16 @@ resource "aws_instance" "devops_server" {
               sudo usermod -aG docker ubuntu
               EOF
 }
+
+resource "time_sleep" "wait_5_minutes" {
+  depends_on = [aws_instance.web_server]
+  create_duration = "5m"
+}
+
+resource "null_resource" "destroy_trigger" {
+  depends_on = [time_sleep.wait_5_minutes]
+
+  triggers = {
+    instance_id = aws_instance.web_server.id
+  }
+}

@@ -10,11 +10,8 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-
       - name: Checkout Source
         uses: actions/checkout@v4
-      
-      
 
       # AWS Credentials
       - name: Configure AWS Credentials
@@ -72,33 +69,44 @@ jobs:
           host: ${{ env.EC2_IP }}
           username: ubuntu
           key: ${{ secrets.EC2_SSH_KEY }}
-          script: | 
+          script: |
+            # 1. Automatically install Docker if missing (handles brand-new EC2 instances)
+            if ! command -v docker &> /dev/null; then
+              echo "Docker not found. Installing..."
+              sudo apt-get update
+              sudo apt-get install -y docker.io docker-compose-plugin
+              sudo usermod -aG docker ubuntu
+              # Reload group context for the current non-interactive shell session
+              exec sg docker "$0" "$@"
+            fi
 
-              mkdir -p ~/app
+            # 2. Setup application directory
+            mkdir -p ~/app
 
-              cat > ~/app/docker-compose.yml << 'EOF'
-              version: "3.9"
+            cat > ~/app/docker-compose.yml << 'EOF'
+            version: "3.9"
 
-              services:
-                app:
-                  image: ayushsingh0/devops-project:v1
-                  container_name: devops-container
-                  restart: always
-                  ports:
-                    - "3000:3000"
+            services:
+              app:
+                image: ayushsingh0/devops-project:v1
+                container_name: devops-container
+                restart: always
+                ports:
+                  - "3000:3000"
+            EOF
 
-              EOF
+            cd ~/app
 
-              cd ~/app
+            # 3. Pull and run the container
+            docker compose pull
+            docker compose up -d
 
-              docker compose pull
-              docker compose up -d
-      # 1. Wait for 5 minutes (300 seconds)
+      # 4. Wait for 5 minutes (300 seconds)
       - name: Wait for 5 Minutes
         run: sleep 300
 
-      # 2. Automatically destroy the infrastructure
+      # 5. Automatically destroy the infrastructure
       - name: Ephemeral Teardown (Terraform Destroy)
-        if: always() # This ensures your infrastructure is destroyed even if the Docker steps fail
+        if: always() # Ensures your AWS resources are deleted even if any previous steps fail
         run: terraform destroy -auto-approve
         working-directory: terraform
